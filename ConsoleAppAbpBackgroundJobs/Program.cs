@@ -9,12 +9,17 @@ namespace ConsoleAppAbpBackgroundJobs
     {
         static void Main(string[] args)
         {
-            using (var application = AbpApplicationFactory.Create<AppModule>())
+            using (var application = AbpApplicationFactory.Create<AppModule>
+            (options =>
+            {
+                options.UseAutofac(); //Autofac integration
+            }))
             {
                 application.Initialize();
 
                 //Resolve a service and use it
-                var helloWorldService =  application.ServiceProvider.GetService<HelloWorldService>();
+                var helloWorldService = application.ServiceProvider.GetService<HelloWorldService>();
+
                 helloWorldService.SayHello();
 
                 Console.WriteLine("Press ENTER to stop application...");
